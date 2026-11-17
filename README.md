@@ -252,6 +252,37 @@ clinfo -l
 ```
 
 ---
+## 5a. Enable LevelZero instead of OpenCL
+```bash
+echo /opt/intel/oneapi/umf/latest/lib | sudo tee /etc/ld.so.conf.d/intel-oneapi-umf.conf
+sudo ldconfig
+ldconfig -p | grep libumf
+```
+In case of llama-server usage, this should the check result on devices:
+```bash
+(base) alvise@ubuntu:/opt/intel/oneapi/redist/lib$ ONEAPI_DEVICE_SELECTOR='level_zero:*' /opt/llama.cpp/llama-server --list-devices
+Available devices:
+  SYCL0: Intel(R) Arc(TM) Pro B70 Graphics (32656 MiB, 31639 MiB free)
+  SYCL1: Intel(R) Arc(TM) Pro B70 Graphics (32656 MiB, 32599 MiB free)
+```
+If LevelZero is not working:
+```bash
+(base) alvise@ubuntu:~/Strata$ /opt/llama.cpp/llama-server --list-devices
+0.00.194.899 W SYCL GPU device 0 does not use Level Zero backend, disabling Level Zero memory API
+0.00.199.118 W SYCL GPU device 1 does not use Level Zero backend, disabling Level Zero memory API
+Available devices:
+  SYCL0: Intel(R) Arc(TM) Pro B70 Graphics (31023 MiB, 31023 MiB free)
+  SYCL1: Intel(R) Arc(TM) Pro B70 Graphics (31023 MiB, 31023 MiB free)
+
+
+(base) alvise@ubuntu:~/Strata$ cd /opt/intel/oneapi/redist/lib && \
+ldd libur_adapter_level_zero.so.0 libur_adapter_level_zero_v2.so.0 | grep -E ':$|not found'
+libur_adapter_level_zero.so.0:
+        libumf.so.1 => not found
+libur_adapter_level_zero_v2.so.0:
+        libumf.so.1 => not found
+```
+---
 
 ## 6. Security trade-off and the narrower alternative
 
