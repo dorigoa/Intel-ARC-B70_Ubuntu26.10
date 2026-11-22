@@ -19,6 +19,7 @@ echo "deb [signed-by=/usr/share/keyrings/intel-oneapi-archive-keyring.gpg] https
   | sudo tee /etc/apt/sources.list.d/oneAPI.list
 
 sudo apt update
+sudo apt install intel-oneapi-umf/all
 ```
 
 ## 1. The symptom
