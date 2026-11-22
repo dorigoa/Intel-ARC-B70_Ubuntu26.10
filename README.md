@@ -20,6 +20,7 @@ echo "deb [signed-by=/usr/share/keyrings/intel-oneapi-archive-keyring.gpg] https
 
 sudo apt update
 sudo apt install intel-oneapi-umf/all
+sudo apt install -y intel-oneapi-runtime-libs
 ```
 
 ## 1. The symptom
