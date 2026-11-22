@@ -5,6 +5,22 @@ Verified on **Ubuntu 26.10**, kernel `xe` driver, **2× Intel Arc Pro B70** (`Ba
 
 ---
 
+## 0. Install OneAPI
+```
+sudo apt update
+sudo apt install -y wget gpg-agent ca-certificates
+
+# Add Intel oneAPI APT public key
+wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+  | sudo gpg --dearmor -o /usr/share/keyrings/intel-oneapi-archive-keyring.gpg
+
+# Add the oneAPI repository
+echo "deb [signed-by=/usr/share/keyrings/intel-oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
+  | sudo tee /etc/apt/sources.list.d/oneAPI.list
+
+sudo apt update
+```
+
 ## 1. The symptom
 
 Graphics works perfectly (GUI, 165 Hz), the GPUs are listed by `lspci`, but `xpu-smi`
